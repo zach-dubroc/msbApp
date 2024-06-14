@@ -1,0 +1,117 @@
+﻿<Page xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:MSBeverageRecordApp"
+        xmlns:VisualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core" x:Class="MSBeverageRecordApp.CrudWindow"
+        mc:Ignorable="d"
+        d:DesignHeight="510" d:DesignWidth="890"
+        Title="CrudWindow">
+
+    <Viewbox>
+        <Grid Height="510" Width="890">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35*"></RowDefinition>
+                <RowDefinition Height="200*"></RowDefinition>
+                <RowDefinition Height="25*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+            <Menu Name="fileMenu" Visibility="Collapsed" HorizontalAlignment="Left" Width="956" Background="White" Grid.ColumnSpan="2">
+
+            </Menu>
+            <Button x:Name="clrSearch" Visibility="Hidden" Content="X" Click="clrSearch_Click" Margin="280,46,145,387" Grid.Column="1" Grid.RowSpan="2" />
+            <ComboBox x:Name="cboSearch" Visibility="Hidden" Margin="300,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="135" Height="28" MaxDropDownHeight="304" VerticalContentAlignment="Center" IsEditable="True" IsReadOnly="True" Focusable="False" Text="Search By" Grid.RowSpan="2" Grid.Column="1" SelectionChanged="cboSearch_SelectionChanged"/>
+            <ComboBox x:Name="Filterby" SelectionChanged="Filterby_SelectionChanged" Margin="16,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="144" Height="30" MaxDropDownHeight="304" VerticalContentAlignment="Center" IsEditable="True" IsReadOnly="True" Focusable="False" Text="Search By" Grid.RowSpan="2" Grid.Column="1"/>
+            <TextBox x:Name="FilterTextBox" TextChanged="FilterTextBox_TextChanged" Margin="160,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="115" Height="28" VerticalContentAlignment="Center" Grid.Column="1" Grid.RowSpan="2" ></TextBox>
+            <Label x:Name="txtSearchPlaceholder" Content="Search..." Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="173,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="54" Grid.Column="1" RenderTransformOrigin="-0.741,0.538" Grid.RowSpan="2"/>
+
+            <DataGrid Visibility="Visible" x:Name="MSBeverageRecordGrid" Margin="10,5,10,13" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding record_id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="category" Width="100" Binding="{Binding categoryName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="manufacturer" Width="100" Binding="{Binding companyName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="model" Width="100" Binding="{Binding model}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="serial" Width="100" Binding="{Binding serial}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="purchase date" Width="100" Binding="{Binding purchase_date, StringFormat= {}{0: MM/dd/yy}}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="cost" Width="100" Binding="{Binding cost, StringFormat=C}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="location" Width="100" Binding="{Binding locationName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="sub-location" Width="150" Binding="{Binding sub_location}"></DataGridTextColumn>
+
+                </DataGrid.Columns>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding is_deleted}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+
+
+            </DataGrid>
+
+
+            <Label Name="EditHeader" Visibility="Visible"  FontSize="22px" HorizontalAlignment="Center" Margin="32,5,0,0" VerticalAlignment="Top" Height="47" Width="300" Grid.ColumnSpan="2"/>
+
+            <TextBox Visibility="Hidden" x:Name="consoleOutput" HorizontalAlignment="Left" Margin="166,22,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="654" Grid.ColumnSpan="3" Grid.Row="2" Height="18" />
+            <ComboBox Visibility="Visible" x:Name="Filter" Margin="29,55,138,22" Grid.Column="0" Grid.ColumnSpan="2">
+                <ComboBoxItem Content="Select a Filter" IsSelected="True"/>
+                <ComboBoxItem Content="Category 1" />
+                <ComboBoxItem Content="Category 2" />
+                <ComboBoxItem Content="Category 3" />
+                <ComboBoxItem Content="Category 4" />
+                <ComboBoxItem Content="Category 5" />
+            </ComboBox>
+
+            <Label Name="lblEdit" Content="Edit Record" HorizontalAlignment="Left" FontSize="30" FontWeight="Bold"  Grid.ColumnSpan="1" Width="221" Visibility="Hidden"/>
+
+
+            <StackPanel x:Name="spLabels" Grid.Row="1" Visibility="Hidden" Background="White" HorizontalAlignment="Left" Width="184" VerticalAlignment="Top" Margin="250,10,0,0" Height="418" Grid.ColumnSpan="2">
+                <!--<Label Content="record id : " Margin="0,5,0,0" Height="46" Width="184" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>-->
+                <Label Content="Category Name" Margin="0,5,0,0" Height="46" Width="184" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                <Label Content="Company Name" HorizontalAlignment="Left" Margin="0,5,0,0" Height="46" Visibility="Visible" Width="184"  HorizontalContentAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" />
+                <Label Content="Model"  Margin="0,5,0,0" Height="46" Width="184" FlowDirection="RightToLeft" HorizontalContentAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                <Label Content="Serial"  Height="46" Width="184" FlowDirection="RightToLeft" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Label Content="Purchase Date" HorizontalAlignment="Left" Margin="0,5,0,0" Height="46" Width="184" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <Label Content="Cost" HorizontalAlignment="Left" Margin="0,5,0,0" Height="46" Width="184" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <Label Content="Location" HorizontalAlignment="Left" Margin="0,5,0,0" Height="46" Width="184" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <Label Content="Sub-Location" Height="46" Width="184" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel x:Name="spText" Visibility="Hidden" Background="White" HorizontalAlignment="Left" Width="206" Margin="70,10,0,0" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" Height="418">
+
+                <ComboBox x:Name="cboCatName" Text="TextBox" Width="206" Height="46" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+
+                <ComboBox x:Name="cboManufacturer"  Margin="0,5,0,0" Text="TextBox" Width="206" Height="46" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+
+                <TextBox HorizontalAlignment="Left" Name="txbModel" Margin="0,5,0,0" TextWrapping="Wrap" Text="" Height="46" VerticalContentAlignment="Center" Width="206"/>
+                <TextBox HorizontalAlignment="Left" Name="txbSerial" Margin="0,5,0,0" TextWrapping="Wrap" Text="" Height="46" VerticalContentAlignment="Center" Width="206"/>
+                <DatePicker
+            SelectedDate="{Binding purchase_date, FallbackValue=DateTime.today}" HorizontalAlignment="Left" x:Name="txbPurchaseDate" Margin="0,5,0,0" Text="TextBox" Width="206" Height="46" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                <TextBox HorizontalAlignment="Left" Name="txbCost" Margin="0,5,0,0" Height="46" TextWrapping="Wrap" Text="" VerticalContentAlignment="Center" Width="206"/>
+                <ComboBox HorizontalAlignment="Left" Name="cboLocation" Margin="0,5,0,0" Text="TextBox" VerticalAlignment="Top" Width="206" Height="36" VerticalContentAlignment="Center"/>
+                <TextBox HorizontalAlignment="Left" Name="txbSubLocation" Margin="0,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="46" VerticalContentAlignment="Center" Width="206"/>
+            </StackPanel>
+            <Button Grid.Column="1" Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="318,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="32" Width="80" Visibility="Hidden" Click="btnCancel_Click"/>
+            <Button Grid.Column="1" Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="173,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="32" Width="78" Visibility="Hidden" Click="btnSaveChange_Click"/>
+            <Button Grid.Column="1" Name="btnDelete" Content="Delete record" HorizontalAlignment="Left" Margin="33,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="32" Width="78" Visibility="Hidden" Click="btnDelete_Click"/>
+
+
+
+
+        </Grid>
+    </Viewbox>
+</Page>
+    
+    

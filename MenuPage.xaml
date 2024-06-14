@@ -1,0 +1,25 @@
+﻿<Page x:Class="MSBeverageRecordApp.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MSBeverageRecordApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MenuPage">
+    <Viewbox Stretch="Fill">
+        <Grid Background="#FFFBF5F5" Height="450" Width="800">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="47*"/>
+                <RowDefinition Height="43*"/>
+            </Grid.RowDefinitions>
+            <Label  FontSize="40" Content="Mississippi Beverage Equipment Tracking" HorizontalAlignment="Center" VerticalAlignment="Top" Height="68" Width="736"/>
+            <Button x:Name="btnaddRecord" Content="  Add New Record" HorizontalAlignment="Left" Margin="91,85,0,0" VerticalAlignment="Top" Click="addRecord" Height="92" Width="287" RenderTransformOrigin="-1.89,2.081" FontSize="26" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Background="#FF0C465A" BorderBrush="#FF040404"/>
+            <Button x:Name="btnModifyDeleteRecord" Content="  Modify/Delete&#xD;&#xA;  Record" HorizontalAlignment="Left" VerticalAlignment="Top" Height="92" Width="287" FontSize="26" Background="#FF0C465A" Foreground="White" Margin="91,193,0,0" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Click="btnModifyDeleteRecord_Click" Grid.RowSpan="2"/>
+            <Button x:Name="btnViewReports" Content="  View Reports" HorizontalAlignment="Left" Margin="93,67,0,0" VerticalAlignment="Top" Height="98" Width="285" FontSize="26" Background="#FF0C465A" Foreground="White" RenderTransformOrigin="1.092,-0.969" UseLayoutRounding="False" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Click="btnViewReports_Click" Grid.Row="1"/>
+            <Button x:Name="btnAddCategory" Content="  Add a Category" HorizontalAlignment="Left" Margin="436,85,0,0" VerticalAlignment="Top" Height="92" Width="290" FontSize="26" Background="#FF0C465A" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Click="btnAddCategory_Click"/>
+            <Button x:Name="btnAddManufacturer" Content="  Add a Manufacturer" HorizontalAlignment="Left" Margin="436,193,0,0" VerticalAlignment="Top" Height="92" Width="290" FontSize="26" Background="#FF0C465A" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Grid.RowSpan="2" Click="btnAddManufacturer_Click"/>
+            <Button x:Name="btnAddLocation" Content="  Add a Location" HorizontalAlignment="Left" Margin="436,67,0,0" VerticalAlignment="Top" Height="98" Width="290" FontSize="26" Background="#FF0C465A" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Grid.Row="1" Click="btnAddLocation_Click"/>
+        </Grid>
+    </Viewbox>
+</Page>
